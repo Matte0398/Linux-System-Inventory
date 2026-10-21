@@ -1,0 +1,38 @@
+LINUX SYSTEM INFORMATION
+Generated           : 2026-10-21 15:49:51 +0000
+Sections            : system, memory, storage
+
+[ SYSTEM ]
+------------------------------------------------------------
+Hostname            : HOST1
+FQDN                : HOST1
+Operating system    : Rocky Linux 9.4 (Blue Onyx)
+Kernel              : Linux 5.14.0-427.13.1.el9_4.x86_64
+Architecture        : x86_64
+Uptime              : 12 day(s), 3 hour(s), 41 minute(s)
+...
+
+[ MEMORY ]
+------------------------------------------------------------
+RAM total           : 7.8 GiB
+RAM used            : 2.1 GiB (27%)
+RAM available       : 5.7 GiB (73%)
+Swap                : 0 KiB used / 2.0 GiB total (0%)
+
+[ STORAGE ]
+------------------------------------------------------------
+Block devices:
+NAME  TYPE  FSTYPE  SIZE  MOUNTPOINT  MODEL
+sda   disk  -       50G   -           Virtual disk
+sda1  part  xfs     1G    /boot       -
+sda2  part  LVM2    49G   -           -
+
+Filesystem usage:
+MOUNT  TYPE  SIZE      USED     AVAIL     USE  IUSE  SOURCE
+/      xfs   44.0 GiB  6.2 GiB  37.8 GiB  15%  2%    /dev/mapper/rl-root
+/boot  xfs   960 MiB   312 MiB  648 MiB   33%  1%    /dev/sda1
+
+[ SUMMARY ]
+------------------------------------------------------------
+Collection warnings : 0
+Status              : Complete
