@@ -95,13 +95,6 @@ Other distributions may provide the local inventory fields when the required Bas
 system_inventory.sh [-s LIST] [-x LIST] [-J] [-o FILE [-f]] [-h]
 ```
 
-From the project directory, run a report or request help:
-
-```bash
-bash system_inventory.sh
-bash system_inventory.sh -h
-```
-
 See the options below for section selection, JSON output and file saving, and the [sample reports](#example-files) for the resulting formats.
 
 ---
@@ -301,12 +294,12 @@ Conventions:
 
 The [examples](examples/) directory contains fictional sample reports:
 
-| File                                      | Contents                                             |
-| ----------------------------------------- | ---------------------------------------------------- |
-| [inventory.txt](examples/inventory.txt)   | Abbreviated text report for `system,memory,storage`. |
-| [inventory.json](examples/inventory.json) | Single-line JSON report for `memory,ports`.          |
+| File                                      | Contents                                          |
+| ----------------------------------------- | ------------------------------------------------- |
+| [inventory.txt](examples/inventory.txt)   | Abbreviated text report for `cpu,memory,storage`. |
+| [inventory.json](examples/inventory.json) | JSON report for all sections.                     |
 
-HOST1, HOST2 ... are only the placeholders
+IP is only a placeholder
 
 ---
 

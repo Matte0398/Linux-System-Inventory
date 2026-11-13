@@ -1,36 +1,40 @@
 LINUX SYSTEM INFORMATION
-Generated           : 2026-10-21 15:49:51 +0000
-Sections            : system, memory, storage
+Generated           : 2026-11-13 18:45:05 +0100
+Sections            : cpu, memory, storage
 
-[ SYSTEM ]
+[ CPU ]
 ------------------------------------------------------------
-Hostname            : HOST1
-FQDN                : HOST1
-Operating system    : Rocky Linux 9.4 (Blue Onyx)
-Kernel              : Linux 5.14.0-427.13.1.el9_4.x86_64
-Architecture        : x86_64
-Uptime              : 12 day(s), 3 hour(s), 41 minute(s)
-...
+CPU model           : AMD Ryzen 7 6800H with Radeon Graphics
+Vendor              : AuthenticAMD
+Logical CPUs        : 2
+Physical cores      : 2
+Sockets             : 1
+Threads per core    : 1
+Load average        : 0.00, 0.01, 0.00 (1, 5, 15 min)
 
 [ MEMORY ]
 ------------------------------------------------------------
-RAM total           : 7.8 GiB
-RAM used            : 2.1 GiB (27%)
-RAM available       : 5.7 GiB (73%)
+RAM total           : 3.6 GiB
+RAM used            : 767.8 MiB (21%)
+RAM available       : 2.8 GiB (78%)
 Swap                : 0 KiB used / 2.0 GiB total (0%)
 
 [ STORAGE ]
 ------------------------------------------------------------
 Block devices:
-NAME  TYPE  FSTYPE  SIZE  MOUNTPOINT  MODEL
-sda   disk  -       50G   -           Virtual disk
-sda1  part  xfs     1G    /boot       -
-sda2  part  LVM2    49G   -           -
+NAME     TYPE  FSTYPE       SIZE     MOUNTPOINT  MODEL
+sda      disk  -            20G      -           QEMU HARDDISK
+sda1     part  -            1M       -           -
+sda2     part  xfs          2G       /boot       -
+sda3     part  LVM2_member  18G      -           -
+rl-root  lvm   xfs          16G      /           -
+rl-swap  lvm   swap         2G       [SWAP]      -
+sr0      rom   iso9660      1000.9M  -           QEMU DVD-ROM
 
 Filesystem usage:
-MOUNT  TYPE  SIZE      USED     AVAIL     USE  IUSE  SOURCE
-/      xfs   44.0 GiB  6.2 GiB  37.8 GiB  15%  2%    /dev/mapper/rl-root
-/boot  xfs   960 MiB   312 MiB  648 MiB   33%  1%    /dev/sda1
+MOUNT  TYPE  SIZE      USED       AVAIL     USE  IUSE  SOURCE
+/      xfs   15.9 GiB  2.7 GiB    13.3 GiB  17%  1%    /dev/mapper/rl-root
+/boot  xfs   1.9 GiB   442.3 MiB  1.5 GiB   23%  1%    /dev/sda2
 
 [ SUMMARY ]
 ------------------------------------------------------------

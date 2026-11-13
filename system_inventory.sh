@@ -10,7 +10,6 @@
 # Report pipeline failures even when the last command succeeds.
 set -o pipefail
 
-# Use the C locale for consistent command output and parsing.
 export LC_ALL=C
 
 readonly SCRIPT_VERSION='2.0.0'
@@ -19,11 +18,8 @@ readonly TITLE_COLOR=$'\033[1;32m'
 readonly HEADING_COLOR=$'\033[1;36m'
 readonly COLOR_RESET=$'\033[0m'
 readonly TAB=$'\t'
-
-# Report order: each section is collected by the matching collect_<section> function.
 readonly ALL_SECTIONS=(system cpu memory storage network ports services security updates)
 
-# Section title and description, separated by '|'.
 declare -A SECTION_INFO=(
     [system]='SYSTEM|Hostname, OS, kernel, uptime, hardware, virtualization, time, users'
     [cpu]='CPU|CPU model, cores, threads, load average'
@@ -79,7 +75,6 @@ command_exists() {
 }
 
 
-# Return success if VALUE is one of the given items: in_list VALUE ITEM...
 in_list() {
     local wanted="$1" item
     shift
@@ -90,15 +85,14 @@ in_list() {
 }
 
 
-# Read the first line of a file into REPLY; fails if the file is unreadable or empty.
 read_line() {
     REPLY=''
+
     [[ -r "$1" ]] && { IFS= read -r REPLY < "$1"; } 2>/dev/null
     [[ -n "$REPLY" ]]
 }
 
 
-# Join non-empty, unique standard input lines with a separator.
 join_values() {
     awk -v separator="${1:-, }" 'NF && !seen[$0]++ { result = result (result != "" ? separator : "") $0 } END { print result }'
 }
@@ -138,7 +132,6 @@ warn_collection() {
 }
 
 
-# Store a field (or a table when COLUMNS is given) for the current section: add_field KEY LABEL VALUE [COLUMNS].
 add_field() {
     item_section+=("$current_section")
     item_key+=("$1")
@@ -148,7 +141,6 @@ add_field() {
 }
 
 
-# Append a tab-separated row to the table variable named by $1 (empty cells become "-").
 table_row() {
     local destination="$1" cell row=''
     shift
@@ -165,7 +157,6 @@ table_row() {
 }
 
 
-# Capture a command's output into the variable named by $1 (partial output from a command that exits with an error is kept)
 capture_information() {
     local destination="$1" description="$2" captured_output status
     shift 2
@@ -194,7 +185,6 @@ capture_information() {
 }
 
 
-# Print the value of the first "KEY<SEPARATOR>value" line from standard input, without spaces and quotes.
 get_value() {
     awk -v prefix="$1$2" 'index($0, prefix) == 1 {
         value = substr($0, length(prefix) + 1)
@@ -243,7 +233,6 @@ collect_system() {
 
     add_field LAST_BOOT 'Last boot' "$boot_time"
 
-    # Hardware data from DMI; firmware placeholders such as "To be filled by O.E.M." are discarded.
     for dmi_name in sys_vendor product_name product_serial; do
         read_line "/sys/class/dmi/id/$dmi_name" || continue
 
@@ -253,7 +242,6 @@ collect_system() {
         esac
     done
 
-    # The serial number file exists but is readable only by root.
     [[ -e /sys/class/dmi/id/product_serial && ! -r /sys/class/dmi/id/product_serial ]] && dmi[product_serial]='Requires root'
 
     add_field VENDOR 'Vendor' "${dmi[sys_vendor]:-}"
@@ -270,7 +258,6 @@ collect_system() {
 
     add_field VIRTUALIZATION 'Virtualization' "$virtualization"
 
-    # Inside a container the firmware of the host is not meaningful.
     if (( ! in_container )); then
         [[ -d /sys/firmware/efi ]] && boot_mode='UEFI' || boot_mode='BIOS (legacy)'
     fi
@@ -314,7 +301,6 @@ collect_cpu() {
     if [[ "$sockets" =~ ^[0-9]+$ && "$cores_per_socket" =~ ^[0-9]+$ ]]; then
         cores=$((sockets * cores_per_socket))
     elif [[ "$threads" =~ ^[0-9]+$ && "$threads_per_core" =~ ^[1-9][0-9]*$ ]]; then
-        # ARM systems often report clusters instead of sockets.
         cores=$((threads / threads_per_core))
     fi
 
@@ -938,7 +924,6 @@ done
 
 (( ${#selected_sections[@]} > 0 )) || usage_error "all sections were excluded"
 
-# timeout keeps a hung command (DNS, D-Bus, package manager) from blocking the report.
 required_commands=(awk sort timeout)
 
 [[ -n "$output_file" ]] && required_commands+=(tee)
@@ -957,8 +942,6 @@ use_color=0
 (( ! json_output )) && [[ -t 1 && "${TERM:-dumb}" != dumb && -z "${NO_COLOR:-}" ]] && use_color=1
 
 generated_at="$(date '+%Y-%m-%d %H:%M:%S %z')"
-
-# systemctl may exist without systemd running (containers): check it once for all sections.
 has_systemd=0
 
 command_exists systemctl && [[ -d /run/systemd/system ]] && has_systemd=1
