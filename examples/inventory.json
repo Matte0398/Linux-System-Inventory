@@ -122,8 +122,8 @@
     ]
   },
   "NETWORK": {
-    "DEFAULT_GATEWAY": "IP (ens18)",
-    "DNS_SERVERS": "IP",
+    "DEFAULT_GATEWAY": "IP1 (ens18)",
+    "DNS_SERVERS": "IP1",
     "DNS_SEARCH": "",
     "INTERFACES": [
       {
@@ -131,7 +131,7 @@
         "STATE": "up",
         "MAC": "bc:24:11:90:95:7f",
         "MTU": "1500",
-        "IPV4": "IP/24",
+        "IPV4": "IP1/24",
         "IPV6": "fe80::be24:11ff:fe90:957f/64"
       },
       {

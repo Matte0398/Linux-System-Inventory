@@ -299,7 +299,7 @@ The [examples](examples/) directory contains fictional sample reports:
 | [inventory.txt](examples/inventory.txt)   | Abbreviated text report for `cpu,memory,storage`. |
 | [inventory.json](examples/inventory.json) | JSON report for all sections.                     |
 
-IP is only a placeholder
+IP1 is only a placeholder
 
 ---
 
